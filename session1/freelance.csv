@@ -1,0 +1,24 @@
+Interface,Nom,Signification,Type,Obligatoire,Calculee
+Freelance (principal),freelance,Identifiant du freelance,INT,OUI,NON
+Freelance (principal),nom,Nom du freelance,VARCHAR,OUI,NON
+Freelance (principal),prenom,Prenom du freelance,VARCHAR,OUI,NON
+Freelance (principal),email,Adresse email du freelance,VARCHAR,OUI,NON
+Freelance (principal),telephone,Numero de telephone,VARCHAR,NON,NON
+Freelance (principal),description,Description du freelance,TEXT,NON,NON
+Freelance (principal),image,Photo ou image du freelance,VARCHAR,NON,NON
+Freelance (principal),facebook,Lien Facebook du freelance,VARCHAR,NON,NON
+Freelance (principal),instagram,Lien Instagram du freelance,VARCHAR,NON,NON
+Freelance (principal),linkedin,Lien LinkedIn du freelance,VARCHAR,NON,NON
+Freelance (principal),github,Lien GitHub du freelance,VARCHAR,NON,NON
+Freelance (principal),service,Identifiant du service,INT,OUI,NON
+Freelance (principal),titre,Titre du service,VARCHAR,OUI,NON
+Freelance (principal),description_service,Description du service,TEXT,OUI,NON
+Freelance (principal),prix,Prix du service,DECIMAL,OUI,NON
+Freelance (principal),image_service,Image du service,VARCHAR,NON,NON
+Freelance (principal),categorie_service,Identifiant de la categorie de service,INT,OUI,NON
+Freelance (principal),nom_categorie,Nom de la categorie de service,VARCHAR,OUI,NON
+Freelance (principal),description_categorie,Description de la categorie,TEXT,NON,NON
+Freelance (principal),commande,Identifiant de la commande,INT,OUI,NON
+Freelance (principal),date_commande,Date de la commande,DATE,OUI,NON
+Freelance (principal),statut,Statut de la commande,VARCHAR,OUI,NON
+Freelance (principal),prix_total,Prix total de la commande,DECIMAL,OUI,NON
