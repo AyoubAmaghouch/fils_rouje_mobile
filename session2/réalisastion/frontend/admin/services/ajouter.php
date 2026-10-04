@@ -39,41 +39,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Gestion de l'image
     $imageName = null;
     if (!empty($_FILES['image_service']['name'])) {
-        $file       = $_FILES['image_service'];
-        $extension  = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-        $allowedExt = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
-        $allowedMime= ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-
-        $mime = null;
-        if (function_exists('finfo_open')) {
-            $finfo = finfo_open(FILEINFO_MIME_TYPE);
-            $mime  = finfo_file($finfo, $file['tmp_name']);
-            finfo_close($finfo);
-        } elseif (function_exists('mime_content_type')) {
-            $mime = @mime_content_type($file['tmp_name']);
-        } elseif (function_exists('getimagesize')) {
-            $imgInfo = @getimagesize($file['tmp_name']);
-            $mime    = $imgInfo['mime'] ?? null;
-        }
-        if (empty($mime)) {
-            $mime = $file['type'] ?? '';
-        }
-
-        if ($file['error'] !== UPLOAD_ERR_OK) {
-            $errors['image_service'] = 'Erreur lors de l\'upload de l\'image.';
-        } elseif (!in_array($extension, $allowedExt)) {
-            $errors['image_service'] = 'Extension non autorisée (JPG, PNG, GIF, WEBP).';
-        } elseif (!in_array($mime, $allowedMime)) {
-            $errors['image_service'] = 'Type MIME non autorisé.';
-        } elseif ($file['size'] > 5 * 1024 * 1024) {
-            $errors['image_service'] = 'L\'image ne doit pas dépasser 5 MB.';
+        $file = $_FILES['image_service'];
+        if (($file['error'] ?? UPLOAD_ERR_OK) !== UPLOAD_ERR_OK || empty($file['tmp_name']) || !is_uploaded_file($file['tmp_name'])) {
+            $errors['image_service'] = 'Erreur lors de l\'upload de l\'image (fichier invalide ou trop volumineux).';
         } else {
-            $imageName = uniqid('service_', true) . '.' . $extension;
+            $extension  = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+            $allowedExt  = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+            $allowedMime = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+
+            $mime = null;
+            if (function_exists('finfo_open')) {
+                $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                $mime  = @finfo_file($finfo, $file['tmp_name']);
+                if ($finfo) finfo_close($finfo);
+            } elseif (function_exists('mime_content_type')) {
+                $mime = @mime_content_type($file['tmp_name']);
+            } elseif (function_exists('getimagesize')) {
+                $imgInfo = @getimagesize($file['tmp_name']);
+                $mime    = $imgInfo['mime'] ?? null;
+            }
+            if (empty($mime)) {
+                $mime = $file['type'] ?? '';
+            }
+
+            if (!in_array($extension, $allowedExt)) {
+                $errors['image_service'] = 'Extension non autorisée (JPG, PNG, GIF, WEBP).';
+            } elseif (!in_array($mime, $allowedMime)) {
+                $errors['image_service'] = 'Type MIME non autorisé.';
+            } elseif ($file['size'] > 5 * 1024 * 1024) {
+                $errors['image_service'] = 'L\'image ne doit pas dépasser 5 MB.';
+            } else {
+                $imageName = uniqid('service_', true) . '.' . $extension;
+            }
         }
     }
 
     if (empty($errors)) {
-        if ($imageName) {
+        if ($imageName && !empty($_FILES['image_service']['tmp_name'])) {
             $uploadDir = __DIR__ . '/../../assets/uploads/services/';
             if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
             move_uploaded_file($_FILES['image_service']['tmp_name'], $uploadDir . $imageName);
@@ -92,11 +94,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ':id_categorie'  => $old['id_categorie']
         ]);
 
+        // Synchroniser et sauvegarder automatiquement les données dans le fichier JSON
+        ClassificationService::syncDataFromDB($pdo);
+
         $_SESSION['flash_msg']  = 'Le service « ' . $old['titre'] . ' » a été créé avec succès !';
         $_SESSION['flash_type'] = 'success';
         header('Location: ' . BASE_URL . '/frontend/admin/services/index.php');
         exit;
     }
+
 }
 
 require_once __DIR__ . '/../../includes/header.php';

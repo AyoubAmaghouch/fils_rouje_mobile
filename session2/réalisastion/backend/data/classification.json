@@ -1,109 +1,386 @@
 {
-  "macro_domains": {
-    "tech": {
-      "nom": "Technologies & Développement",
-      "icon": "💻",
-      "description": "Services de développement web, mobile et logiciels",
-      "categories": ["Développement Web", "Développement Mobile", "Developpement Web", "Developpement Mobile", "UI UX Design", "UI/UX Design"]
+    "macro_domains": {
+        "tech": {
+            "nom": "Technologies & Développement",
+            "icon": "💻",
+            "description": "Services de développement web, mobile et logiciels",
+            "categories": [
+                "Développement Web",
+                "Développement Mobile",
+                "Developpement Web",
+                "Developpement Mobile",
+                "UI UX Design",
+                "UI\/UX Design"
+            ]
+        },
+        "creative": {
+            "nom": "Design & Identité Visuelle",
+            "icon": "🎨",
+            "description": "Création graphique, modélisation et branding",
+            "categories": [
+                "Design Graphique",
+                "Design 3D",
+                "Logo et Branding",
+                "Photographie"
+            ]
+        },
+        "media": {
+            "nom": "Audiovisuel & Édition",
+            "icon": "🎬",
+            "description": "Montage vidéo, rédaction, traduction et contenus",
+            "categories": [
+                "Montage Video",
+                "Montage Vidéo",
+                "Édition",
+                "Rédaction & Traduction",
+                "Redaction",
+                "Rédaction",
+                "Traduction"
+            ]
+        },
+        "marketing": {
+            "nom": "Marketing & Business",
+            "icon": "🚀",
+            "description": "Stratégie digitale, SEO et croissance",
+            "categories": [
+                "Marketing Digital"
+            ]
+        }
     },
-    "creative": {
-      "nom": "Design & Identité Visuelle",
-      "icon": "🎨",
-      "description": "Création graphique, modélisation et branding",
-      "categories": ["Design Graphique", "Design 3D", "Logo et Branding", "Photographie"]
+    "statuts_commande": {
+        "en attente": {
+            "label": "En attente",
+            "badge_class": "badge-warning",
+            "icon": "⏳",
+            "description": "Commande reçue, en attente de prise en charge par le freelance.",
+            "transitions": [
+                "confirmée",
+                "annulée"
+            ]
+        },
+        "confirmée": {
+            "label": "Confirmée",
+            "badge_class": "badge-info",
+            "icon": "☑️",
+            "description": "Commande confirmée, le projet est prêt à démarrer.",
+            "transitions": [
+                "en cours",
+                "annulée"
+            ]
+        },
+        "en cours": {
+            "label": "En cours",
+            "badge_class": "badge-info",
+            "icon": "⚙️",
+            "description": "Le freelance travaille actuellement sur le livrable.",
+            "transitions": [
+                "terminée",
+                "annulée"
+            ]
+        },
+        "terminée": {
+            "label": "Terminée",
+            "badge_class": "badge-success",
+            "icon": "✅",
+            "description": "Prestation achevée et livrée au client.",
+            "transitions": []
+        },
+        "annulée": {
+            "label": "Annulée",
+            "badge_class": "badge-danger",
+            "icon": "❌",
+            "description": "La commande a été annulée.",
+            "transitions": []
+        }
     },
-    "media": {
-      "nom": "Audiovisuel & Édition",
-      "icon": "🎬",
-      "description": "Montage vidéo, rédaction, traduction et contenus",
-      "categories": ["Montage Video", "Montage Vidéo", "Édition", "Rédaction & Traduction", "Redaction", "Rédaction", "Traduction"]
+    "niveaux_freelance": {
+        "senior": {
+            "label": "Expert Senior",
+            "badge": "⭐ Senior",
+            "min_services": 2,
+            "badge_class": "badge-info"
+        },
+        "pro": {
+            "label": "Professionnel",
+            "badge": "⚡ Pro",
+            "min_services": 1,
+            "badge_class": "badge-secondary"
+        },
+        "junior": {
+            "label": "Nouveau Freelance",
+            "badge": "🌱 Junior",
+            "min_services": 0,
+            "badge_class": "badge-warning"
+        }
     },
-    "marketing": {
-      "nom": "Marketing & Business",
-      "icon": "🚀",
-      "description": "Stratégie digitale, SEO et croissance",
-      "categories": ["Marketing Digital"]
-    }
-  },
-  "statuts_commande": {
-    "en attente": {
-      "label": "En attente",
-      "badge_class": "badge-warning",
-      "icon": "⏳",
-      "description": "Commande reçue, en attente de prise en charge par le freelance.",
-      "transitions": ["confirmée", "annulée"]
+    "gammes_prix": {
+        "budget": {
+            "code": "budget",
+            "label": "Budget Direct",
+            "max_prix": 1000,
+            "badge": "💡 Offre Access",
+            "badge_class": "badge-secondary"
+        },
+        "standard": {
+            "code": "standard",
+            "label": "Standard Pro",
+            "min_prix": 1001,
+            "max_prix": 3000,
+            "badge": "⭐ Standard Pro",
+            "badge_class": "badge-info"
+        },
+        "premium": {
+            "code": "premium",
+            "label": "Sur Mesure Premium",
+            "min_prix": 3001,
+            "badge": "👑 Sur Mesure",
+            "badge_class": "badge-warning"
+        }
     },
-    "confirmée": {
-      "label": "Confirmée",
-      "badge_class": "badge-info",
-      "icon": "☑️",
-      "description": "Commande confirmée, le projet est prêt à démarrer.",
-      "transitions": ["en cours", "annulée"]
-    },
-    "en cours": {
-      "label": "En cours",
-      "badge_class": "badge-info",
-      "icon": "⚙️",
-      "description": "Le freelance travaille actuellement sur le livrable.",
-      "transitions": ["terminée", "annulée"]
-    },
-    "terminée": {
-      "label": "Terminée",
-      "badge_class": "badge-success",
-      "icon": "✅",
-      "description": "Prestation achevée et livrée au client.",
-      "transitions": []
-    },
-    "annulée": {
-      "label": "Annulée",
-      "badge_class": "badge-danger",
-      "icon": "❌",
-      "description": "La commande a été annulée.",
-      "transitions": []
-    }
-  },
-  "niveaux_freelance": {
-    "senior": {
-      "label": "Expert Senior",
-      "badge": "⭐ Senior",
-      "min_services": 2,
-      "badge_class": "badge-info"
-    },
-    "pro": {
-      "label": "Professionnel",
-      "badge": "⚡ Pro",
-      "min_services": 1,
-      "badge_class": "badge-secondary"
-    },
-    "junior": {
-      "label": "Nouveau Freelance",
-      "badge": "🌱 Junior",
-      "min_services": 0,
-      "badge_class": "badge-warning"
-    }
-  },
-  "gammes_prix": {
-    "budget": {
-      "code": "budget",
-      "label": "Budget Direct",
-      "max_prix": 1000,
-      "badge": "💡 Offre Access",
-      "badge_class": "badge-secondary"
-    },
-    "standard": {
-      "code": "standard",
-      "label": "Standard Pro",
-      "min_prix": 1001,
-      "max_prix": 3000,
-      "badge": "⭐ Standard Pro",
-      "badge_class": "badge-info"
-    },
-    "premium": {
-      "code": "premium",
-      "label": "Sur Mesure Premium",
-      "min_prix": 3001,
-      "badge": "👑 Sur Mesure",
-      "badge_class": "badge-warning"
-    }
-  }
+    "categories_data": [
+        {
+            "id_categorie": 1,
+            "nom": "Developpement Web",
+            "description": "Creation et developpement de sites et applications web",
+            "classification": {
+                "nom": "Technologies & Développement",
+                "icon": "💻",
+                "description": "Services de développement web, mobile et logiciels",
+                "categories": [
+                    "Développement Web",
+                    "Développement Mobile",
+                    "Developpement Web",
+                    "Developpement Mobile",
+                    "UI UX Design",
+                    "UI\/UX Design"
+                ],
+                "key": "tech"
+            }
+        },
+        {
+            "id_categorie": 2,
+            "nom": "Developpement Mobile",
+            "description": "Creation d applications mobiles Android et iOS",
+            "classification": {
+                "nom": "Technologies & Développement",
+                "icon": "💻",
+                "description": "Services de développement web, mobile et logiciels",
+                "categories": [
+                    "Développement Web",
+                    "Développement Mobile",
+                    "Developpement Web",
+                    "Developpement Mobile",
+                    "UI UX Design",
+                    "UI\/UX Design"
+                ],
+                "key": "tech"
+            }
+        },
+        {
+            "id_categorie": 3,
+            "nom": "Montage Video",
+            "description": "Montage et edition de videos professionnelles",
+            "classification": {
+                "nom": "Audiovisuel & Édition",
+                "icon": "🎬",
+                "description": "Montage vidéo, rédaction, traduction et contenus",
+                "categories": [
+                    "Montage Video",
+                    "Montage Vidéo",
+                    "Édition",
+                    "Rédaction & Traduction",
+                    "Redaction",
+                    "Rédaction",
+                    "Traduction"
+                ],
+                "key": "media"
+            }
+        },
+        {
+            "id_categorie": 5,
+            "nom": "Design Graphique",
+            "description": "Creation de visuels et supports graphiques",
+            "classification": {
+                "nom": "Design & Identité Visuelle",
+                "icon": "🎨",
+                "description": "Création graphique, modélisation et branding",
+                "categories": [
+                    "Design Graphique",
+                    "Design 3D",
+                    "Logo et Branding",
+                    "Photographie"
+                ],
+                "key": "creative"
+            }
+        },
+        {
+            "id_categorie": 6,
+            "nom": "Design 3D",
+            "description": "Modelisation et conception 3D",
+            "classification": {
+                "nom": "Design & Identité Visuelle",
+                "icon": "🎨",
+                "description": "Création graphique, modélisation et branding",
+                "categories": [
+                    "Design Graphique",
+                    "Design 3D",
+                    "Logo et Branding",
+                    "Photographie"
+                ],
+                "key": "creative"
+            }
+        },
+        {
+            "id_categorie": 7,
+            "nom": "UI UX Design",
+            "description": "Conception d interfaces et experiences utilisateur",
+            "classification": {
+                "nom": "Technologies & Développement",
+                "icon": "💻",
+                "description": "Services de développement web, mobile et logiciels",
+                "categories": [
+                    "Développement Web",
+                    "Développement Mobile",
+                    "Developpement Web",
+                    "Developpement Mobile",
+                    "UI UX Design",
+                    "UI\/UX Design"
+                ],
+                "key": "tech"
+            }
+        },
+        {
+            "id_categorie": 8,
+            "nom": "Logo et Branding",
+            "description": "Creation de logos et identites visuelles",
+            "classification": {
+                "nom": "Design & Identité Visuelle",
+                "icon": "🎨",
+                "description": "Création graphique, modélisation et branding",
+                "categories": [
+                    "Design Graphique",
+                    "Design 3D",
+                    "Logo et Branding",
+                    "Photographie"
+                ],
+                "key": "creative"
+            }
+        },
+        {
+            "id_categorie": 9,
+            "nom": "Photographie",
+            "description": "Services de photographie et retouche photo",
+            "classification": {
+                "nom": "Design & Identité Visuelle",
+                "icon": "🎨",
+                "description": "Création graphique, modélisation et branding",
+                "categories": [
+                    "Design Graphique",
+                    "Design 3D",
+                    "Logo et Branding",
+                    "Photographie"
+                ],
+                "key": "creative"
+            }
+        },
+        {
+            "id_categorie": 10,
+            "nom": "Redaction",
+            "description": "Redaction d articles et contenus",
+            "classification": {
+                "nom": "Audiovisuel & Édition",
+                "icon": "🎬",
+                "description": "Montage vidéo, rédaction, traduction et contenus",
+                "categories": [
+                    "Montage Video",
+                    "Montage Vidéo",
+                    "Édition",
+                    "Rédaction & Traduction",
+                    "Redaction",
+                    "Rédaction",
+                    "Traduction"
+                ],
+                "key": "media"
+            }
+        },
+        {
+            "id_categorie": 11,
+            "nom": "Traduction",
+            "description": "Traduction de documents et contenus",
+            "classification": {
+                "nom": "Audiovisuel & Édition",
+                "icon": "🎬",
+                "description": "Montage vidéo, rédaction, traduction et contenus",
+                "categories": [
+                    "Montage Video",
+                    "Montage Vidéo",
+                    "Édition",
+                    "Rédaction & Traduction",
+                    "Redaction",
+                    "Rédaction",
+                    "Traduction"
+                ],
+                "key": "media"
+            }
+        },
+        {
+            "id_categorie": 12,
+            "nom": "Marketing Digital",
+            "description": "Marketing digital et gestion des campagnes",
+            "classification": {
+                "nom": "Marketing & Business",
+                "icon": "🚀",
+                "description": "Stratégie digitale, SEO et croissance",
+                "categories": [
+                    "Marketing Digital"
+                ],
+                "key": "marketing"
+            }
+        }
+    ],
+    "freelances_data": [
+        {
+            "id_freelance": 2,
+            "nom": "jean",
+            "prenom": "Patrick",
+            "email": "ayoubamaghouche@gmail.com",
+            "telephone": "0609244835",
+            "description": "i want kill red john\r\nred john is mine",
+            "image": "freelance_6ab07e191cc0b4.70608784.jpg",
+            "facebook": "https:\/\/www.instagram.com\/areachofficial\/",
+            "instagram": "https:\/\/www.figma.com\/design\/JVakSPr9177NCZjCgmzxuu\/Sans-titre?node-id=0-1&t=ZAg8atTOKjXTBRM6-0",
+            "linkedin": "https:\/\/www.instagram.com\/areachofficial\/",
+            "github": "https:\/\/www.instagram.com\/areachofficial\/",
+            "nb_services": 0,
+            "level_meta": {
+                "label": "Nouveau Freelance",
+                "badge": "🌱 Junior",
+                "min_services": 0,
+                "badge_class": "badge-warning"
+            }
+        },
+        {
+            "id_freelance": 4,
+            "nom": "ayoub",
+            "prenom": "ama",
+            "email": "2006120300296@ofppt-edu.ma",
+            "telephone": "+212 681 946756",
+            "description": "ffffffffff",
+            "image": "freelance_6ac2e77b387c12.97808354.png",
+            "facebook": "http:\/\/localhost:3000\/register.php",
+            "instagram": "http:\/\/localhost:3000\/register.php",
+            "linkedin": "https:\/\/github.com\/AyoubAmaghouch\/fils_rouje_mobile",
+            "github": "https:\/\/github.com\/AyoubAmaghouch\/fils_rouje_mobile",
+            "nb_services": 0,
+            "level_meta": {
+                "label": "Nouveau Freelance",
+                "badge": "🌱 Junior",
+                "min_services": 0,
+                "badge_class": "badge-warning"
+            }
+        }
+    ],
+    "services_data": [],
+    "commandes_data": [],
+    "last_updated": "2026-10-04 23:55:39"
 }

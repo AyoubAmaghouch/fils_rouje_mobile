@@ -68,44 +68,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Gestion de l'image
     $imageName = null;
     if (!empty($_FILES['image']['name'])) {
-        $file      = $_FILES['image'];
-        $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-        $allowedExt  = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
-        $allowedMime = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/x-icon'];
-
-        // Détection du type MIME sécurisée et compatible (avec/sans extension fileinfo)
-        $mime = null;
-        if (function_exists('finfo_open')) {
-            $finfo = finfo_open(FILEINFO_MIME_TYPE);
-            $mime  = finfo_file($finfo, $file['tmp_name']);
-            finfo_close($finfo);
-        } elseif (function_exists('mime_content_type')) {
-            $mime = @mime_content_type($file['tmp_name']);
-        } elseif (function_exists('getimagesize')) {
-            $imgInfo = @getimagesize($file['tmp_name']);
-            $mime    = $imgInfo['mime'] ?? null;
-        }
-        if (empty($mime)) {
-            $mime = $file['type'] ?? '';
-        }
-
-        if ($file['error'] !== UPLOAD_ERR_OK) {
-            $errors['image'] = 'Erreur lors de l\'upload de l\'image.';
-        } elseif (!in_array($extension, $allowedExt)) {
-            $errors['image'] = 'Extension non autorisée. Utilisez : JPG, PNG, GIF ou WEBP.';
-        } elseif (!in_array($mime, $allowedMime)) {
-            $errors['image'] = 'Type de fichier non autorisé.';
-        } elseif ($file['size'] > 5 * 1024 * 1024) {
-            $errors['image'] = 'L\'image ne doit pas dépasser 5 MB.';
+        $file = $_FILES['image'];
+        if (($file['error'] ?? UPLOAD_ERR_OK) !== UPLOAD_ERR_OK || empty($file['tmp_name']) || !is_uploaded_file($file['tmp_name'])) {
+            $errors['image'] = 'Erreur lors de l\'upload de l\'image (fichier invalide ou trop volumineux).';
         } else {
-            $imageName = uniqid('freelance_', true) . '.' . $extension;
+            $extension  = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+            $allowedExt  = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+            $allowedMime = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/x-icon'];
+
+            $mime = null;
+            if (function_exists('finfo_open')) {
+                $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                $mime  = @finfo_file($finfo, $file['tmp_name']);
+                if ($finfo) finfo_close($finfo);
+            } elseif (function_exists('mime_content_type')) {
+                $mime = @mime_content_type($file['tmp_name']);
+            } elseif (function_exists('getimagesize')) {
+                $imgInfo = @getimagesize($file['tmp_name']);
+                $mime    = $imgInfo['mime'] ?? null;
+            }
+            if (empty($mime)) {
+                $mime = $file['type'] ?? '';
+            }
+
+            if (!in_array($extension, $allowedExt)) {
+                $errors['image'] = 'Extension non autorisée. Utilisez : JPG, PNG, GIF ou WEBP.';
+            } elseif (!in_array($mime, $allowedMime)) {
+                $errors['image'] = 'Type de fichier non autorisé.';
+            } elseif ($file['size'] > 5 * 1024 * 1024) {
+                $errors['image'] = 'L\'image ne doit pas dépasser 5 MB.';
+            } else {
+                $imageName = uniqid('freelance_', true) . '.' . $extension;
+            }
         }
     }
 
     // Si aucune erreur → insertion
     if (empty($errors)) {
         // Déplacer l'image si présente
-        if ($imageName) {
+        if ($imageName && !empty($_FILES['image']['tmp_name'])) {
             $uploadDir = __DIR__ . '/../../assets/uploads/freelances/';
             if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
             move_uploaded_file($_FILES['image']['tmp_name'], $uploadDir . $imageName);
@@ -142,11 +143,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
+        // Synchroniser et sauvegarder automatiquement les données dans le fichier JSON
+        ClassificationService::syncDataFromDB($pdo);
+
         $_SESSION['flash_msg']  = 'Le freelance « ' . $old['prenom'] . ' ' . $old['nom'] . ' » a été ajouté avec succès !';
         $_SESSION['flash_type'] = 'success';
         header('Location: ' . BASE_URL . '/frontend/admin/freelances/index.php');
         exit;
     }
+
 }
 
 require_once __DIR__ . '/../../includes/header.php';

@@ -58,11 +58,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ':id'          => $id
         ]);
 
+        // Synchroniser et sauvegarder automatiquement les données dans le fichier JSON
+        ClassificationService::syncDataFromDB($pdo);
+
         $_SESSION['flash_msg']  = 'La catégorie « ' . $old['nom'] . ' » a été modifiée avec succès !';
         $_SESSION['flash_type'] = 'success';
         header('Location: ' . BASE_URL . '/frontend/admin/categories/index.php');
         exit;
     }
+
 }
 
 require_once __DIR__ . '/../../includes/header.php';

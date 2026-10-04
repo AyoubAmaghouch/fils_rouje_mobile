@@ -56,47 +56,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $supprimerImage = isset($_POST['supprimer_image']) && $_POST['supprimer_image'] === '1';
 
     if (!empty($_FILES['image_service']['name'])) {
-        $file       = $_FILES['image_service'];
-        $extension  = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-        $allowedExt = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
-        $allowedMime= ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-
-        $mime = null;
-        if (function_exists('finfo_open')) {
-            $finfo = finfo_open(FILEINFO_MIME_TYPE);
-            $mime  = finfo_file($finfo, $file['tmp_name']);
-            finfo_close($finfo);
-        } elseif (function_exists('mime_content_type')) {
-            $mime = @mime_content_type($file['tmp_name']);
-        } elseif (function_exists('getimagesize')) {
-            $imgInfo = @getimagesize($file['tmp_name']);
-            $mime    = $imgInfo['mime'] ?? null;
-        }
-        if (empty($mime)) {
-            $mime = $file['type'] ?? '';
-        }
-
-        if ($file['error'] !== UPLOAD_ERR_OK) {
-            $errors['image_service'] = 'Erreur lors de l\'upload.';
-        } elseif (!in_array($extension, $allowedExt)) {
-            $errors['image_service'] = 'Extension non autorisée.';
-        } elseif (!in_array($mime, $allowedMime)) {
-            $errors['image_service'] = 'Type MIME non autorisé.';
-        } elseif ($file['size'] > 5 * 1024 * 1024) {
-            $errors['image_service'] = 'L\'image ne doit pas dépasser 5 MB.';
+        $file = $_FILES['image_service'];
+        if (($file['error'] ?? UPLOAD_ERR_OK) !== UPLOAD_ERR_OK || empty($file['tmp_name']) || !is_uploaded_file($file['tmp_name'])) {
+            $errors['image_service'] = 'Erreur lors de l\'upload de l\'image (fichier invalide ou trop volumineux).';
         } else {
-            $newImageName = uniqid('service_', true) . '.' . $extension;
-            $uploadDir    = __DIR__ . '/../../assets/uploads/services/';
-            if ($service['image_service'] && file_exists($uploadDir . $service['image_service'])) {
-                unlink($uploadDir . $service['image_service']);
+            $extension  = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+            $allowedExt  = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+            $allowedMime = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+
+            $mime = null;
+            if (function_exists('finfo_open')) {
+                $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                $mime  = @finfo_file($finfo, $file['tmp_name']);
+                if ($finfo) finfo_close($finfo);
+            } elseif (function_exists('mime_content_type')) {
+                $mime = @mime_content_type($file['tmp_name']);
+            } elseif (function_exists('getimagesize')) {
+                $imgInfo = @getimagesize($file['tmp_name']);
+                $mime    = $imgInfo['mime'] ?? null;
             }
-            move_uploaded_file($file['tmp_name'], $uploadDir . $newImageName);
-            $imageName = $newImageName;
+            if (empty($mime)) {
+                $mime = $file['type'] ?? '';
+            }
+
+            if (!in_array($extension, $allowedExt)) {
+                $errors['image_service'] = 'Extension non autorisée.';
+            } elseif (!in_array($mime, $allowedMime)) {
+                $errors['image_service'] = 'Type MIME non autorisé.';
+            } elseif ($file['size'] > 5 * 1024 * 1024) {
+                $errors['image_service'] = 'L\'image ne doit pas dépasser 5 MB.';
+            } else {
+                $newImageName = uniqid('service_', true) . '.' . $extension;
+                $uploadDir    = __DIR__ . '/../../assets/uploads/services/';
+                if ($service['image_service'] && file_exists($uploadDir . $service['image_service'])) {
+                    @unlink($uploadDir . $service['image_service']);
+                }
+                move_uploaded_file($file['tmp_name'], $uploadDir . $newImageName);
+                $imageName = $newImageName;
+            }
         }
     } elseif ($supprimerImage) {
         $uploadDir = __DIR__ . '/../../assets/uploads/services/';
         if ($service['image_service'] && file_exists($uploadDir . $service['image_service'])) {
-            unlink($uploadDir . $service['image_service']);
+            @unlink($uploadDir . $service['image_service']);
         }
         $imageName = null;
     }
@@ -118,11 +120,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ':id'             => $id
         ]);
 
+        // Synchroniser et sauvegarder automatiquement les données dans le fichier JSON
+        ClassificationService::syncDataFromDB($pdo);
+
         $_SESSION['flash_msg']  = 'Le service « ' . $old['titre'] . ' » a été modifié avec succès !';
         $_SESSION['flash_type'] = 'success';
         header('Location: ' . BASE_URL . '/frontend/admin/services/index.php');
         exit;
     }
+
 }
 
 require_once __DIR__ . '/../../includes/header.php';

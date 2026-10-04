@@ -165,5 +165,42 @@ class ClassificationService {
         }
         return $freelances;
     }
+
+    /**
+     * Sauvegarde la structure de données dans backend/data/classification.json
+     */
+    public static function save(array $data): bool {
+        self::$data = $data;
+        $jsonContent = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        return file_put_contents(self::$jsonPath, $jsonContent) !== false;
+    }
+
+    /**
+     * Synchronise et sauvegarde l'intégralité des données de la base de données et des classifications dans le fichier JSON
+     */
+    public static function syncDataFromDB(PDO $pdo): bool {
+        $data = self::load();
+
+        // 1. Catégories
+        $cats = $pdo->query("SELECT * FROM categorie_service ORDER BY id_categorie ASC")->fetchAll(PDO::FETCH_ASSOC);
+        $data['categories_data'] = self::enrichCategories($cats);
+
+        // 2. Freelances
+        $freelances = $pdo->query("SELECT * FROM freelance ORDER BY id_freelance ASC")->fetchAll(PDO::FETCH_ASSOC);
+        $data['freelances_data'] = self::enrichFreelances($freelances, $pdo);
+
+        // 3. Services
+        $services = $pdo->query("SELECT s.*, c.nom AS nom_categorie FROM service s LEFT JOIN categorie_service c ON s.id_categorie = c.id_categorie ORDER BY s.id_service ASC")->fetchAll(PDO::FETCH_ASSOC);
+        $data['services_data'] = self::enrichServices($services);
+
+        // 4. Commandes
+        $commandes = $pdo->query("SELECT c.*, s.titre AS titre_service FROM commande c LEFT JOIN service s ON c.id_service = s.id_service ORDER BY c.id_commande ASC")->fetchAll(PDO::FETCH_ASSOC);
+        $data['commandes_data'] = self::enrichCommandes($commandes);
+
+        $data['last_updated'] = date('Y-m-d H:i:s');
+
+        return self::save($data);
+    }
 }
+
 
