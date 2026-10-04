@@ -8,11 +8,11 @@
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/../services/ClassificationService.php';
 
-define('DB_HOST', 'localhost');
-define('DB_PORT', '3000');
+define('DB_HOST', '127.0.0.1');
+define('DB_PORT', '3306');
 define('DB_NAME', 'freelance');
-define('DB_USER', 'root');       // Configuration normale / par défaut
-define('DB_PASS', '');           // Mot de passe vide (normal)
+define('DB_USER', 'root');       // Configuration XAMPP / WAMP standard
+define('DB_PASS', '');           // Mot de passe vide par défaut
 define('DB_CHARSET', 'utf8mb4');
 
 function getDB(): PDO {
