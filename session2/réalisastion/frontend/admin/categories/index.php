@@ -41,6 +41,8 @@ if ($search !== '') {
     ");
 }
 $categories = $stmt->fetchAll();
+$categories = ClassificationService::enrichCategories($categories);
+$macroDomains = ClassificationService::getMacroDomains();
 ?>
 
 <!-- Flash message -->
@@ -59,12 +61,32 @@ $categories = $stmt->fetchAll();
             🗂️ Catégories de Services
         </h1>
         <p style="color:var(--text-muted);font-size:13px;">
-            <?= count($categories) ?> catégorie<?= count($categories) > 1 ? 's' : '' ?> enregistrée<?= count($categories) > 1 ? 's' : '' ?>
+            <?= count($categories) ?> catégorie<?= count($categories) > 1 ? 's' : '' ?> enregistrée<?= count($categories) > 1 ? 's' : '' ?> (Classifiées via JSON & MySQL)
         </p>
     </div>
     <a href="<?= BASE_URL ?>/frontend/admin/categories/ajouter.php" class="btn btn-primary" id="btn-ajouter-categorie">
         ＋ Nouvelle Catégorie
     </a>
+</div>
+
+<!-- Widgets Macro-Domaines (Classification JSON) -->
+<div class="card" style="margin-bottom:20px;padding:16px;">
+    <div style="font-size:12px;font-weight:700;text-transform:uppercase;color:var(--primary-light);letter-spacing:1px;margin-bottom:12px;">
+        📄 Classification JSON — Macro-Domaines d'activité
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:12px;">
+        <?php foreach ($macroDomains as $domain): ?>
+        <div style="background:var(--bg-input);padding:12px;border-radius:8px;border:1px solid var(--border);">
+            <div style="font-size:14px;font-weight:700;color:var(--text-primary);display:flex;align-items:center;gap:6px;">
+                <span><?= $domain['icon'] ?></span>
+                <span><?= htmlspecialchars($domain['nom']) ?></span>
+            </div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:4px;">
+                <?= htmlspecialchars($domain['description'] ?? '') ?>
+            </div>
+        </div>
+        <?php endforeach; ?>
+    </div>
 </div>
 
 <!-- Barre de recherche -->
@@ -107,6 +129,7 @@ $categories = $stmt->fetchAll();
                 <tr>
                     <th>#</th>
                     <th>Nom de la catégorie</th>
+                    <th>Domaine (Classification JSON)</th>
                     <th>Description</th>
                     <th>Services associés</th>
                     <th>Actions</th>
@@ -122,6 +145,13 @@ $categories = $stmt->fetchAll();
                         <div style="font-weight:700;color:var(--text-primary);">
                             <?= htmlspecialchars($c['nom']) ?>
                         </div>
+                    </td>
+
+                    <!-- Domaine (JSON) -->
+                    <td>
+                        <span class="badge badge-secondary" style="font-size:12px;">
+                            <?= $c['classification']['icon'] ?> <?= htmlspecialchars($c['classification']['nom']) ?>
+                        </span>
                     </td>
 
                     <!-- Description -->

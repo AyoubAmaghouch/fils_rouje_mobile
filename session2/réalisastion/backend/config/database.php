@@ -6,6 +6,7 @@
 
 // Chargement de la configuration centrale (BASE_URL)
 require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/../services/ClassificationService.php';
 
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'freelance');

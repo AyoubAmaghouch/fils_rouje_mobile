@@ -32,6 +32,7 @@ if ($search !== '') {
     $stmt = $pdo->query("SELECT * FROM freelance ORDER BY id_freelance DESC");
 }
 $freelances = $stmt->fetchAll();
+$freelances = ClassificationService::enrichFreelances($freelances, $pdo);
 ?>
 
 <!-- Flash message -->
@@ -99,6 +100,7 @@ $freelances = $stmt->fetchAll();
                     <th>#</th>
                     <th>Photo</th>
                     <th>Nom & Prénom</th>
+                    <th>Niveau (JSON)</th>
                     <th>Email</th>
                     <th>Téléphone</th>
                     <th>Réseaux sociaux</th>
@@ -137,6 +139,16 @@ $freelances = $stmt->fetchAll();
                         <?php endif; ?>
                     </td>
 
+                    <!-- Niveau (Classification JSON) -->
+                    <td>
+                        <span class="badge <?= htmlspecialchars($f['level_meta']['badge_class'] ?? 'badge-secondary') ?>" title="<?= htmlspecialchars($f['level_meta']['description'] ?? '') ?>">
+                            <?= htmlspecialchars($f['level_meta']['badge'] ?? '') ?>
+                        </span>
+                        <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">
+                            <?= $f['nb_services'] ?> service<?= $f['nb_services'] > 1 ? 's' : '' ?>
+                        </div>
+                    </td>
+
                     <!-- Email -->
                     <td>
                         <a href="mailto:<?= htmlspecialchars($f['email']) ?>"
@@ -170,6 +182,7 @@ $freelances = $stmt->fetchAll();
                             <?php endif; ?>
                             </div>
                     </td>
+
 
                     <!-- Actions -->
                     <td>

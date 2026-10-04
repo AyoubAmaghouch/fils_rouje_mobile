@@ -1,0 +1,109 @@
+{
+  "macro_domains": {
+    "tech": {
+      "nom": "Technologies & Développement",
+      "icon": "💻",
+      "description": "Services de développement web, mobile et logiciels",
+      "categories": ["Développement Web", "Développement Mobile", "Developpement Web", "Developpement Mobile", "UI UX Design", "UI/UX Design"]
+    },
+    "creative": {
+      "nom": "Design & Identité Visuelle",
+      "icon": "🎨",
+      "description": "Création graphique, modélisation et branding",
+      "categories": ["Design Graphique", "Design 3D", "Logo et Branding", "Photographie"]
+    },
+    "media": {
+      "nom": "Audiovisuel & Édition",
+      "icon": "🎬",
+      "description": "Montage vidéo, rédaction, traduction et contenus",
+      "categories": ["Montage Video", "Montage Vidéo", "Édition", "Rédaction & Traduction", "Redaction", "Rédaction", "Traduction"]
+    },
+    "marketing": {
+      "nom": "Marketing & Business",
+      "icon": "🚀",
+      "description": "Stratégie digitale, SEO et croissance",
+      "categories": ["Marketing Digital"]
+    }
+  },
+  "statuts_commande": {
+    "en attente": {
+      "label": "En attente",
+      "badge_class": "badge-warning",
+      "icon": "⏳",
+      "description": "Commande reçue, en attente de prise en charge par le freelance.",
+      "transitions": ["confirmée", "annulée"]
+    },
+    "confirmée": {
+      "label": "Confirmée",
+      "badge_class": "badge-info",
+      "icon": "☑️",
+      "description": "Commande confirmée, le projet est prêt à démarrer.",
+      "transitions": ["en cours", "annulée"]
+    },
+    "en cours": {
+      "label": "En cours",
+      "badge_class": "badge-info",
+      "icon": "⚙️",
+      "description": "Le freelance travaille actuellement sur le livrable.",
+      "transitions": ["terminée", "annulée"]
+    },
+    "terminée": {
+      "label": "Terminée",
+      "badge_class": "badge-success",
+      "icon": "✅",
+      "description": "Prestation achevée et livrée au client.",
+      "transitions": []
+    },
+    "annulée": {
+      "label": "Annulée",
+      "badge_class": "badge-danger",
+      "icon": "❌",
+      "description": "La commande a été annulée.",
+      "transitions": []
+    }
+  },
+  "niveaux_freelance": {
+    "senior": {
+      "label": "Expert Senior",
+      "badge": "⭐ Senior",
+      "min_services": 2,
+      "badge_class": "badge-info"
+    },
+    "pro": {
+      "label": "Professionnel",
+      "badge": "⚡ Pro",
+      "min_services": 1,
+      "badge_class": "badge-secondary"
+    },
+    "junior": {
+      "label": "Nouveau Freelance",
+      "badge": "🌱 Junior",
+      "min_services": 0,
+      "badge_class": "badge-warning"
+    }
+  },
+  "gammes_prix": {
+    "budget": {
+      "code": "budget",
+      "label": "Budget Direct",
+      "max_prix": 1000,
+      "badge": "💡 Offre Access",
+      "badge_class": "badge-secondary"
+    },
+    "standard": {
+      "code": "standard",
+      "label": "Standard Pro",
+      "min_prix": 1001,
+      "max_prix": 3000,
+      "badge": "⭐ Standard Pro",
+      "badge_class": "badge-info"
+    },
+    "premium": {
+      "code": "premium",
+      "label": "Sur Mesure Premium",
+      "min_prix": 3001,
+      "badge": "👑 Sur Mesure",
+      "badge_class": "badge-warning"
+    }
+  }
+}

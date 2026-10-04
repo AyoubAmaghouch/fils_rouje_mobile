@@ -46,18 +46,14 @@ $sql .= " ORDER BY c.id_commande DESC";
 $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
 $commandes = $stmt->fetchAll();
+$commandes = ClassificationService::enrichCommandes($commandes);
 
-// Helper badge statut
-function getStatutBadge(string $statut): string {
-    $map = [
-        'en attente'  => 'badge-warning',
-        'confirmée'   => 'badge-info',
-        'en cours'    => 'badge-info',
-        'terminée'    => 'badge-success',
-        'annulée'     => 'badge-danger',
-    ];
-    $class = $map[strtolower($statut)] ?? 'badge-secondary';
-    return "<span class=\"badge {$class}\">" . htmlspecialchars(ucfirst($statut)) . "</span>";
+// Helper badge statut (combine MySQL statut + classification JSON)
+function getStatutBadge(string $statut, array $meta = []): string {
+    $class = $meta['badge_class'] ?? 'badge-secondary';
+    $icon  = $meta['icon'] ?? '📌';
+    $label = $meta['label'] ?? ucfirst($statut);
+    return "<span class=\"badge {$class}\">{$icon} " . htmlspecialchars($label) . "</span>";
 }
 ?>
 
@@ -77,7 +73,7 @@ function getStatutBadge(string $statut): string {
             📦 Commandes Client
         </h1>
         <p style="color:var(--text-muted);font-size:13px;">
-            <?= count($commandes) ?> commande<?= count($commandes) > 1 ? 's' : '' ?> au total
+            <?= count($commandes) ?> commande<?= count($commandes) > 1 ? 's' : '' ?> au total (Workflow & règles de statut configurés via JSON)
         </p>
     </div>
 </div>
@@ -132,7 +128,7 @@ function getStatutBadge(string $statut): string {
                     <th>Service commandé</th>
                     <th>Freelance</th>
                     <th>Prix Total</th>
-                    <th>Statut</th>
+                    <th>Statut (JSON Meta)</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -173,7 +169,7 @@ function getStatutBadge(string $statut): string {
 
                     <!-- Statut -->
                     <td>
-                        <?= getStatutBadge($cmd['statut']) ?>
+                        <?= getStatutBadge($cmd['statut'], $cmd['status_meta'] ?? []) ?>
                     </td>
 
                     <!-- Actions -->

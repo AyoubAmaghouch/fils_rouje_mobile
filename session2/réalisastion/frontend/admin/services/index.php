@@ -40,6 +40,7 @@ if ($search !== '') {
     ");
 }
 $services = $stmt->fetchAll();
+$services = ClassificationService::enrichServices($services);
 ?>
 
 <!-- Flash message -->
@@ -58,7 +59,7 @@ $services = $stmt->fetchAll();
             🛠️ Services & Gigs
         </h1>
         <p style="color:var(--text-muted);font-size:13px;">
-            <?= count($services) ?> service<?= count($services) > 1 ? 's' : '' ?> enregistré<?= count($services) > 1 ? 's' : '' ?>
+            <?= count($services) ?> service<?= count($services) > 1 ? 's' : '' ?> enregistré<?= count($services) > 1 ? 's' : '' ?> (Classification tarifaire & domaines via JSON)
         </p>
     </div>
     <a href="<?= BASE_URL ?>/frontend/admin/services/ajouter.php" class="btn btn-primary" id="btn-ajouter-service">
@@ -107,9 +108,10 @@ $services = $stmt->fetchAll();
                     <th>#</th>
                     <th>Image</th>
                     <th>Titre du service</th>
-                    <th>Catégorie</th>
+                    <th>Catégorie / Domaine</th>
                     <th>Freelance</th>
                     <th>Prix</th>
+                    <th>Gamme JSON</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -147,7 +149,7 @@ $services = $stmt->fetchAll();
                     <!-- Catégorie -->
                     <td>
                         <span class="badge badge-secondary">
-                            🗂️ <?= htmlspecialchars($s['nom_categorie'] ?? 'Sans catégorie') ?>
+                            <?= $s['macro_domain']['icon'] ?? '🗂️' ?> <?= htmlspecialchars($s['nom_categorie'] ?? 'Sans catégorie') ?>
                         </span>
                     </td>
 
@@ -166,6 +168,13 @@ $services = $stmt->fetchAll();
                     <td>
                         <span class="price-tag">
                             <?= number_format((float)$s['prix'], 2, ',', ' ') ?> DH
+                        </span>
+                    </td>
+
+                    <!-- Gamme JSON -->
+                    <td>
+                        <span class="badge <?= $s['price_tier']['badge_class'] ?? 'badge-secondary' ?>">
+                            <?= $s['price_tier']['badge'] ?? 'Standard' ?>
                         </span>
                     </td>
 
