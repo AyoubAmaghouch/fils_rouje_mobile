@@ -21,7 +21,7 @@ if (!function_exists('str_starts_with')) {
 
 if (!defined('BASE_URL')) {
     $scriptFile = str_replace('\\', '/', realpath($_SERVER['SCRIPT_FILENAME'] ?? ''));
-    $projDir    = str_replace('\\', '/', realpath(__DIR__ . '/..'));
+    $projDir    = str_replace('\\', '/', realpath(__DIR__ . '/../..'));
     $relPath    = ltrim(str_replace($projDir, '', $scriptFile), '/');
     $scriptName = str_replace('\\', '/', $_SERVER['SCRIPT_NAME'] ?? '');
 

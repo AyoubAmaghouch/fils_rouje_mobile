@@ -9,7 +9,7 @@ $pageTitle  = 'Gestion des Services';
 $activePage = 'services';
 $breadcrumb = [['label' => 'Services']];
 
-require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../../../backend/config/database.php';
 require_once __DIR__ . '/../../includes/header.php';
 
 $pdo = getDB();
@@ -61,7 +61,7 @@ $services = $stmt->fetchAll();
             <?= count($services) ?> service<?= count($services) > 1 ? 's' : '' ?> enregistré<?= count($services) > 1 ? 's' : '' ?>
         </p>
     </div>
-    <a href="<?= BASE_URL ?>/admin/services/ajouter.php" class="btn btn-primary" id="btn-ajouter-service">
+    <a href="<?= BASE_URL ?>/frontend/admin/services/ajouter.php" class="btn btn-primary" id="btn-ajouter-service">
         ＋ Nouveau Service
     </a>
 </div>
@@ -77,7 +77,7 @@ $services = $stmt->fetchAll();
         </div>
         <button type="submit" class="btn btn-primary">Rechercher</button>
         <?php if ($search): ?>
-        <a href="<?= BASE_URL ?>/admin/services/index.php" class="btn btn-outline">✕ Effacer</a>
+        <a href="<?= BASE_URL ?>/frontend/admin/services/index.php" class="btn btn-outline">✕ Effacer</a>
         <?php endif; ?>
     </form>
 </div>
@@ -94,7 +94,7 @@ $services = $stmt->fetchAll();
                 : 'Commencez par ajouter votre premier service (Gig).' ?>
         </p>
         <?php if (!$search): ?>
-        <a href="<?= BASE_URL ?>/admin/services/ajouter.php" class="btn btn-primary" style="margin-top:16px;">
+        <a href="<?= BASE_URL ?>/frontend/admin/services/ajouter.php" class="btn btn-primary" style="margin-top:16px;">
             ＋ Ajouter un Service
         </a>
         <?php endif; ?>
@@ -124,7 +124,7 @@ $services = $stmt->fetchAll();
                         $imgPath = __DIR__ . '/../../assets/uploads/services/' . $s['image_service'];
                         if (!empty($s['image_service']) && file_exists($imgPath)):
                         ?>
-                            <img src="<?= BASE_URL ?>/assets/uploads/services/<?= htmlspecialchars($s['image_service']) ?>"
+                            <img src="<?= BASE_URL ?>/frontend/assets/uploads/services/<?= htmlspecialchars($s['image_service']) ?>"
                                  class="table-avatar" style="border-radius:6px;width:44px;height:44px;object-fit:cover;"
                                  alt="<?= htmlspecialchars($s['titre']) ?>">
                         <?php else: ?>
@@ -172,7 +172,7 @@ $services = $stmt->fetchAll();
                     <!-- Actions -->
                     <td>
                         <div class="actions-cell">
-                            <a href="<?= BASE_URL ?>/admin/services/modifier.php?id=<?= $s['id_service'] ?>"
+                            <a href="<?= BASE_URL ?>/frontend/admin/services/modifier.php?id=<?= $s['id_service'] ?>"
                                class="btn btn-warning btn-sm"
                                title="Modifier">
                                 ✏️ Modifier
@@ -180,7 +180,7 @@ $services = $stmt->fetchAll();
                             <button class="btn btn-danger btn-sm"
                                     title="Supprimer"
                                     onclick="confirmerSuppression(
-                                        '<?= BASE_URL ?>/admin/services/supprimer.php?id=<?= $s['id_service'] ?>',
+                                        '<?= BASE_URL ?>/frontend/admin/services/supprimer.php?id=<?= $s['id_service'] ?>',
                                         '<?= htmlspecialchars(addslashes($s['titre'])) ?>',
                                         'le service'
                                     )">

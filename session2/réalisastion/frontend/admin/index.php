@@ -9,7 +9,7 @@ define('ADMIN_ACCESS', true);
 $pageTitle  = 'Dashboard';
 $activePage = 'dashboard';
 
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../../backend/config/database.php';
 require_once __DIR__ . '/../includes/header.php';
 
 $pdo = getDB();
@@ -75,7 +75,7 @@ function statutBadge(string $statut): string {
         <div class="stat-info">
             <div class="stat-value"><?= $nbFreelances ?></div>
             <div class="stat-label">Freelances</div>
-            <a href="<?= BASE_URL ?>/admin/freelances/index.php" class="stat-link">Voir tous →</a>
+            <a href="<?= BASE_URL ?>/frontend/admin/freelances/index.php" class="stat-link">Voir tous →</a>
         </div>
     </div>
 
@@ -84,7 +84,7 @@ function statutBadge(string $statut): string {
         <div class="stat-info">
             <div class="stat-value"><?= $nbServices ?></div>
             <div class="stat-label">Services (Gigs)</div>
-            <a href="<?= BASE_URL ?>/admin/services/index.php" class="stat-link">Voir tous →</a>
+            <a href="<?= BASE_URL ?>/frontend/admin/services/index.php" class="stat-link">Voir tous →</a>
         </div>
     </div>
 
@@ -93,7 +93,7 @@ function statutBadge(string $statut): string {
         <div class="stat-info">
             <div class="stat-value"><?= $nbCommandes ?></div>
             <div class="stat-label">Commandes</div>
-            <a href="<?= BASE_URL ?>/admin/commandes/index.php" class="stat-link">Voir toutes →</a>
+            <a href="<?= BASE_URL ?>/frontend/admin/commandes/index.php" class="stat-link">Voir toutes →</a>
         </div>
     </div>
 
@@ -102,7 +102,7 @@ function statutBadge(string $statut): string {
         <div class="stat-info">
             <div class="stat-value"><?= number_format((float)$caTotal, 0, ',', ' ') ?> <small style="font-size:14px;font-weight:500">DH</small></div>
             <div class="stat-label">Chiffre d'affaires</div>
-            <a href="<?= BASE_URL ?>/admin/commandes/index.php" class="stat-link">Détails →</a>
+            <a href="<?= BASE_URL ?>/frontend/admin/commandes/index.php" class="stat-link">Détails →</a>
         </div>
     </div>
 
@@ -115,7 +115,7 @@ function statutBadge(string $statut): string {
     <div class="card">
         <div class="card-header">
             <h2 class="card-title"><span class="card-icon">👤</span> Derniers Freelances</h2>
-            <a href="<?= BASE_URL ?>/admin/freelances/ajouter.php" class="btn btn-primary btn-sm">+ Ajouter</a>
+            <a href="<?= BASE_URL ?>/frontend/admin/freelances/ajouter.php" class="btn btn-primary btn-sm">+ Ajouter</a>
         </div>
 
         <?php if (empty($derniersFreelances)): ?>
@@ -128,7 +128,7 @@ function statutBadge(string $statut): string {
             <?php foreach ($derniersFreelances as $f): ?>
             <div style="display:flex;align-items:center;gap:12px;padding:10px;background:var(--bg-input);border-radius:8px;">
                 <?php if (!empty($f['image']) && file_exists(__DIR__ . '/../assets/uploads/freelances/' . $f['image'])): ?>
-                    <img src="<?= BASE_URL ?>/assets/uploads/freelances/<?= htmlspecialchars($f['image']) ?>"
+                    <img src="<?= BASE_URL ?>/frontend/assets/uploads/freelances/<?= htmlspecialchars($f['image']) ?>"
                          class="table-avatar" alt="<?= htmlspecialchars($f['prenom']) ?>">
                 <?php else: ?>
                     <div class="table-avatar-placeholder">
@@ -143,13 +143,13 @@ function statutBadge(string $statut): string {
                         <?= htmlspecialchars($f['email']) ?>
                     </div>
                 </div>
-                <a href="<?= BASE_URL ?>/admin/freelances/modifier.php?id=<?= $f['id_freelance'] ?>"
+                <a href="<?= BASE_URL ?>/frontend/admin/freelances/modifier.php?id=<?= $f['id_freelance'] ?>"
                    class="btn btn-outline btn-sm" style="padding:4px 10px;font-size:11px;">✏️</a>
             </div>
             <?php endforeach; ?>
         </div>
         <div style="margin-top:14px;text-align:center;">
-            <a href="<?= BASE_URL ?>/admin/freelances/index.php" class="btn btn-outline btn-sm">Voir tous les freelances →</a>
+            <a href="<?= BASE_URL ?>/frontend/admin/freelances/index.php" class="btn btn-outline btn-sm">Voir tous les freelances →</a>
         </div>
         <?php endif; ?>
     </div>
@@ -188,7 +188,7 @@ function statutBadge(string $statut): string {
         <?php endif; ?>
 
         <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border);text-align:center;">
-            <a href="<?= BASE_URL ?>/admin/commandes/index.php" class="btn btn-outline btn-sm">Gérer les commandes →</a>
+            <a href="<?= BASE_URL ?>/frontend/admin/commandes/index.php" class="btn btn-outline btn-sm">Gérer les commandes →</a>
         </div>
     </div>
 
@@ -275,16 +275,16 @@ function statutBadge(string $statut): string {
         <h2 class="card-title"><span class="card-icon">⚡</span> Actions rapides</h2>
     </div>
     <div style="display:flex;flex-wrap:wrap;gap:12px;">
-        <a href="<?= BASE_URL ?>/admin/freelances/ajouter.php" class="btn btn-primary">
+        <a href="<?= BASE_URL ?>/frontend/admin/freelances/ajouter.php" class="btn btn-primary">
             👤 Nouveau Freelance
         </a>
-        <a href="<?= BASE_URL ?>/admin/categories/ajouter.php" class="btn btn-outline">
+        <a href="<?= BASE_URL ?>/frontend/admin/categories/ajouter.php" class="btn btn-outline">
             🗂️ Nouvelle Catégorie
         </a>
-        <a href="<?= BASE_URL ?>/admin/services/ajouter.php" class="btn btn-outline">
+        <a href="<?= BASE_URL ?>/frontend/admin/services/ajouter.php" class="btn btn-outline">
             🛠️ Nouveau Service
         </a>
-        <a href="<?= BASE_URL ?>/admin/commandes/index.php" class="btn btn-outline">
+        <a href="<?= BASE_URL ?>/frontend/admin/commandes/index.php" class="btn btn-outline">
             📦 Voir les Commandes
         </a>
     </div>

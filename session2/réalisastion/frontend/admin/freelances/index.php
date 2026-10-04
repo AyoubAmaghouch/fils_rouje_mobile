@@ -9,7 +9,7 @@ $pageTitle  = 'Gestion des Freelances';
 $activePage = 'freelances';
 $breadcrumb = [['label' => 'Freelances']];
 
-require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../../../backend/config/database.php';
 require_once __DIR__ . '/../../includes/header.php';
 
 $pdo = getDB();
@@ -53,7 +53,7 @@ $freelances = $stmt->fetchAll();
             <?= count($freelances) ?> freelance<?= count($freelances) > 1 ? 's' : '' ?> trouvé<?= count($freelances) > 1 ? 's' : '' ?>
         </p>
     </div>
-    <a href="<?= BASE_URL ?>/admin/freelances/ajouter.php" class="btn btn-primary" id="btn-ajouter-freelance">
+    <a href="<?= BASE_URL ?>/frontend/admin/freelances/ajouter.php" class="btn btn-primary" id="btn-ajouter-freelance">
         ＋ Nouveau Freelance
     </a>
 </div>
@@ -69,7 +69,7 @@ $freelances = $stmt->fetchAll();
         </div>
         <button type="submit" class="btn btn-primary">Rechercher</button>
         <?php if ($search): ?>
-        <a href="<?= BASE_URL ?>/admin/freelances/index.php" class="btn btn-outline">✕ Effacer</a>
+        <a href="<?= BASE_URL ?>/frontend/admin/freelances/index.php" class="btn btn-outline">✕ Effacer</a>
         <?php endif; ?>
     </form>
 </div>
@@ -86,7 +86,7 @@ $freelances = $stmt->fetchAll();
                 : 'Commencez par ajouter votre premier freelance.' ?>
         </p>
         <?php if (!$search): ?>
-        <a href="<?= BASE_URL ?>/admin/freelances/ajouter.php" class="btn btn-primary" style="margin-top:16px;">
+        <a href="<?= BASE_URL ?>/frontend/admin/freelances/ajouter.php" class="btn btn-primary" style="margin-top:16px;">
             ＋ Ajouter un Freelance
         </a>
         <?php endif; ?>
@@ -116,7 +116,7 @@ $freelances = $stmt->fetchAll();
                         $imgPath = __DIR__ . '/../../assets/uploads/freelances/' . $f['image'];
                         if (!empty($f['image']) && file_exists($imgPath)):
                         ?>
-                            <img src="<?= BASE_URL ?>/assets/uploads/freelances/<?= htmlspecialchars($f['image']) ?>"
+                            <img src="<?= BASE_URL ?>/frontend/assets/uploads/freelances/<?= htmlspecialchars($f['image']) ?>"
                                  class="table-avatar"
                                  alt="<?= htmlspecialchars($f['prenom']) ?>"
                                  title="<?= htmlspecialchars($f['prenom'] . ' ' . $f['nom']) ?>">
@@ -168,13 +168,13 @@ $freelances = $stmt->fetchAll();
                             <?php if (empty($f['facebook']) && empty($f['instagram']) && empty($f['linkedin']) && empty($f['github'])): ?>
                             <span style="color:var(--text-muted);font-size:12px;">—</span>
                             <?php endif; ?>
-                        </div>
+                            </div>
                     </td>
 
                     <!-- Actions -->
                     <td>
                         <div class="actions-cell">
-                            <a href="<?= BASE_URL ?>/admin/freelances/modifier.php?id=<?= $f['id_freelance'] ?>"
+                            <a href="<?= BASE_URL ?>/frontend/admin/freelances/modifier.php?id=<?= $f['id_freelance'] ?>"
                                class="btn btn-warning btn-sm"
                                id="btn-modifier-<?= $f['id_freelance'] ?>"
                                title="Modifier">
@@ -184,7 +184,7 @@ $freelances = $stmt->fetchAll();
                                     id="btn-supprimer-<?= $f['id_freelance'] ?>"
                                     title="Supprimer"
                                     onclick="confirmerSuppression(
-                                        '<?= BASE_URL ?>/admin/freelances/supprimer.php?id=<?= $f['id_freelance'] ?>',
+                                        '<?= BASE_URL ?>/frontend/admin/freelances/supprimer.php?id=<?= $f['id_freelance'] ?>',
                                         '<?= htmlspecialchars(addslashes($f['prenom'] . ' ' . $f['nom'])) ?>',
                                         'le freelance'
                                     )">

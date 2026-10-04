@@ -9,7 +9,7 @@ $pageTitle  = 'Gestion des Catégories';
 $activePage = 'categories';
 $breadcrumb = [['label' => 'Catégories']];
 
-require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../../../backend/config/database.php';
 require_once __DIR__ . '/../../includes/header.php';
 
 $pdo = getDB();
@@ -62,7 +62,7 @@ $categories = $stmt->fetchAll();
             <?= count($categories) ?> catégorie<?= count($categories) > 1 ? 's' : '' ?> enregistrée<?= count($categories) > 1 ? 's' : '' ?>
         </p>
     </div>
-    <a href="<?= BASE_URL ?>/admin/categories/ajouter.php" class="btn btn-primary" id="btn-ajouter-categorie">
+    <a href="<?= BASE_URL ?>/frontend/admin/categories/ajouter.php" class="btn btn-primary" id="btn-ajouter-categorie">
         ＋ Nouvelle Catégorie
     </a>
 </div>
@@ -78,7 +78,7 @@ $categories = $stmt->fetchAll();
         </div>
         <button type="submit" class="btn btn-primary">Rechercher</button>
         <?php if ($search): ?>
-        <a href="<?= BASE_URL ?>/admin/categories/index.php" class="btn btn-outline">✕ Effacer</a>
+        <a href="<?= BASE_URL ?>/frontend/admin/categories/index.php" class="btn btn-outline">✕ Effacer</a>
         <?php endif; ?>
     </form>
 </div>
@@ -95,7 +95,7 @@ $categories = $stmt->fetchAll();
                 : 'Commencez par ajouter votre première catégorie de service.' ?>
         </p>
         <?php if (!$search): ?>
-        <a href="<?= BASE_URL ?>/admin/categories/ajouter.php" class="btn btn-primary" style="margin-top:16px;">
+        <a href="<?= BASE_URL ?>/frontend/admin/categories/ajouter.php" class="btn btn-primary" style="margin-top:16px;">
             ＋ Ajouter une Catégorie
         </a>
         <?php endif; ?>
@@ -141,7 +141,7 @@ $categories = $stmt->fetchAll();
                     <!-- Actions -->
                     <td>
                         <div class="actions-cell">
-                            <a href="<?= BASE_URL ?>/admin/categories/modifier.php?id=<?= $c['id_categorie'] ?>"
+                            <a href="<?= BASE_URL ?>/frontend/admin/categories/modifier.php?id=<?= $c['id_categorie'] ?>"
                                class="btn btn-warning btn-sm"
                                title="Modifier">
                                 ✏️ Modifier
@@ -149,7 +149,7 @@ $categories = $stmt->fetchAll();
                             <button class="btn btn-danger btn-sm"
                                     title="Supprimer"
                                     onclick="confirmerSuppression(
-                                        '<?= BASE_URL ?>/admin/categories/supprimer.php?id=<?= $c['id_categorie'] ?>',
+                                        '<?= BASE_URL ?>/frontend/admin/categories/supprimer.php?id=<?= $c['id_categorie'] ?>',
                                         '<?= htmlspecialchars(addslashes($c['nom'])) ?>',
                                         'la catégorie'
                                     )">

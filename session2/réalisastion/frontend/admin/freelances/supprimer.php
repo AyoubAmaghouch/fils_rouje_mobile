@@ -6,7 +6,7 @@
 
 define('ADMIN_ACCESS', true);
 
-require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../../../backend/config/database.php';
 
 $pdo = getDB();
 
@@ -16,7 +16,7 @@ $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 if (!$id) {
     $_SESSION['flash_msg']  = 'Identifiant invalide.';
     $_SESSION['flash_type'] = 'danger';
-    header('Location: ' . BASE_URL . '/admin/freelances/index.php');
+    header('Location: ' . BASE_URL . '/frontend/admin/freelances/index.php');
     exit;
 }
 
@@ -28,7 +28,7 @@ $freelance = $stmt->fetch();
 if (!$freelance) {
     $_SESSION['flash_msg']  = 'Freelance introuvable.';
     $_SESSION['flash_type'] = 'danger';
-    header('Location: ' . BASE_URL . '/admin/freelances/index.php');
+    header('Location: ' . BASE_URL . '/frontend/admin/freelances/index.php');
     exit;
 }
 
@@ -54,5 +54,5 @@ try {
     $_SESSION['flash_type'] = 'danger';
 }
 
-header('Location: ' . BASE_URL . '/admin/freelances/index.php');
+header('Location: ' . BASE_URL . '/frontend/admin/freelances/index.php');
 exit;

@@ -5,14 +5,14 @@
 
 define('ADMIN_ACCESS', true);
 
-require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../../../backend/config/database.php';
 
 $pdo = getDB();
 $errors = [];
 
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 if (!$id) {
-    header('Location: ' . BASE_URL . '/admin/services/index.php');
+    header('Location: ' . BASE_URL . '/frontend/admin/services/index.php');
     exit;
 }
 
@@ -23,14 +23,14 @@ $service = $stmt->fetch();
 if (!$service) {
     $_SESSION['flash_msg']  = 'Service introuvable.';
     $_SESSION['flash_type'] = 'danger';
-    header('Location: ' . BASE_URL . '/admin/services/index.php');
+    header('Location: ' . BASE_URL . '/frontend/admin/services/index.php');
     exit;
 }
 
 $pageTitle  = 'Modifier — ' . htmlspecialchars($service['titre']);
 $activePage = 'services';
 $breadcrumb = [
-    ['label' => 'Services', 'url' => BASE_URL . '/admin/services/index.php'],
+    ['label' => 'Services', 'url' => BASE_URL . '/frontend/admin/services/index.php'],
     ['label' => 'Modifier']
 ];
 
@@ -120,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $_SESSION['flash_msg']  = 'Le service « ' . $old['titre'] . ' » a été modifié avec succès !';
         $_SESSION['flash_type'] = 'success';
-        header('Location: ' . BASE_URL . '/admin/services/index.php');
+        header('Location: ' . BASE_URL . '/frontend/admin/services/index.php');
         exit;
     }
 }
@@ -131,7 +131,7 @@ $imgUrl = null;
 if (!empty($old['image_service'])) {
     $imgFile = __DIR__ . '/../../assets/uploads/services/' . $old['image_service'];
     if (file_exists($imgFile)) {
-        $imgUrl = BASE_URL . '/assets/uploads/services/' . htmlspecialchars($old['image_service']);
+        $imgUrl = BASE_URL . '/frontend/assets/uploads/services/' . htmlspecialchars($old['image_service']);
     }
 }
 ?>
@@ -142,7 +142,7 @@ if (!empty($old['image_service'])) {
         <h1 style="font-size:20px;font-weight:800;margin-bottom:4px;">✏️ Modifier — <?= htmlspecialchars($service['titre']) ?></h1>
         <p style="color:var(--text-muted);font-size:13px;">Modifiez les détails du service.</p>
     </div>
-    <a href="<?= BASE_URL ?>/admin/services/index.php" class="btn btn-outline">← Retour à la liste</a>
+    <a href="<?= BASE_URL ?>/frontend/admin/services/index.php" class="btn btn-outline">← Retour à la liste</a>
 </div>
 
 <?php if (!empty($errors)): ?>
@@ -252,7 +252,7 @@ if (!empty($old['image_service'])) {
         <button type="submit" class="btn btn-success" id="btn-submit-modifier-service">
             ✅ Enregistrer les modifications
         </button>
-        <a href="<?= BASE_URL ?>/admin/services/index.php" class="btn btn-outline">
+        <a href="<?= BASE_URL ?>/frontend/admin/services/index.php" class="btn btn-outline">
             ✕ Annuler
         </a>
     </div>

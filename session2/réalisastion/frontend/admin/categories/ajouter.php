@@ -5,12 +5,12 @@
 
 define('ADMIN_ACCESS', true);
 
-require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../../../backend/config/database.php';
 
 $pageTitle  = 'Ajouter une Catégorie';
 $activePage = 'categories';
 $breadcrumb = [
-    ['label' => 'Catégories', 'url' => BASE_URL . '/admin/categories/index.php'],
+    ['label' => 'Catégories', 'url' => BASE_URL . '/frontend/admin/categories/index.php'],
     ['label' => 'Ajouter']
 ];
 
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $_SESSION['flash_msg']  = 'La catégorie « ' . $old['nom'] . ' » a été ajoutée avec succès !';
         $_SESSION['flash_type'] = 'success';
-        header('Location: ' . BASE_URL . '/admin/categories/index.php');
+        header('Location: ' . BASE_URL . '/frontend/admin/categories/index.php');
         exit;
     }
 }
@@ -56,7 +56,7 @@ require_once __DIR__ . '/../../includes/header.php';
         <h1 style="font-size:20px;font-weight:800;margin-bottom:4px;">➕ Ajouter une Catégorie</h1>
         <p style="color:var(--text-muted);font-size:13px;">Remplissez les informations ci-dessous.</p>
     </div>
-    <a href="<?= BASE_URL ?>/admin/categories/index.php" class="btn btn-outline">← Retour à la liste</a>
+    <a href="<?= BASE_URL ?>/frontend/admin/categories/index.php" class="btn btn-outline">← Retour à la liste</a>
 </div>
 
 <?php if (!empty($errors)): ?>
@@ -99,7 +99,7 @@ require_once __DIR__ . '/../../includes/header.php';
         <button type="submit" class="btn btn-primary" id="btn-submit-categorie">
             ✅ Enregistrer la Catégorie
         </button>
-        <a href="<?= BASE_URL ?>/admin/categories/index.php" class="btn btn-outline">
+        <a href="<?= BASE_URL ?>/frontend/admin/categories/index.php" class="btn btn-outline">
             ✕ Annuler
         </a>
     </div>

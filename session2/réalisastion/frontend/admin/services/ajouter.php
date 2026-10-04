@@ -5,12 +5,12 @@
 
 define('ADMIN_ACCESS', true);
 
-require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../../../backend/config/database.php';
 
 $pageTitle  = 'Ajouter un Service';
 $activePage = 'services';
 $breadcrumb = [
-    ['label' => 'Services', 'url' => BASE_URL . '/admin/services/index.php'],
+    ['label' => 'Services', 'url' => BASE_URL . '/frontend/admin/services/index.php'],
     ['label' => 'Ajouter']
 ];
 
@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $_SESSION['flash_msg']  = 'Le service « ' . $old['titre'] . ' » a été créé avec succès !';
         $_SESSION['flash_type'] = 'success';
-        header('Location: ' . BASE_URL . '/admin/services/index.php');
+        header('Location: ' . BASE_URL . '/frontend/admin/services/index.php');
         exit;
     }
 }
@@ -108,7 +108,7 @@ require_once __DIR__ . '/../../includes/header.php';
         <h1 style="font-size:20px;font-weight:800;margin-bottom:4px;">➕ Ajouter un Service</h1>
         <p style="color:var(--text-muted);font-size:13px;">Proposez un nouveau service (Gig).</p>
     </div>
-    <a href="<?= BASE_URL ?>/admin/services/index.php" class="btn btn-outline">← Retour à la liste</a>
+    <a href="<?= BASE_URL ?>/frontend/admin/services/index.php" class="btn btn-outline">← Retour à la liste</a>
 </div>
 
 <?php if (!empty($errors)): ?>
@@ -223,7 +223,7 @@ require_once __DIR__ . '/../../includes/header.php';
         <button type="submit" class="btn btn-primary" id="btn-submit-service">
             ✅ Enregistrer le Service
         </button>
-        <a href="<?= BASE_URL ?>/admin/services/index.php" class="btn btn-outline">
+        <a href="<?= BASE_URL ?>/frontend/admin/services/index.php" class="btn btn-outline">
             ✕ Annuler
         </a>
     </div>

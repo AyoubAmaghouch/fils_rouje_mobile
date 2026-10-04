@@ -16,17 +16,15 @@ if (!defined('ADMIN_ACCESS')) {
 // Valeurs par défaut
 $pageTitle  = $pageTitle  ?? 'Admin Panel';
 $activePage = $activePage ?? 'dashboard';
-$breadcrumb = $breadcrumb ?? [];
-
-// BASE_URL est défini via config/database.php → config/config.php
+$breadcrumb = $breadcrumb ?? [];// BASE_URL est défini via config/database.php → config/config.php
 // On s'assure qu'il est disponible même si database.php n'a pas encore été inclus
 if (!defined('BASE_URL')) {
-    require_once __DIR__ . '/../config/config.php';
+    require_once __DIR__ . '/../../backend/config/config.php';
 }
 
 // Statistiques pour les badges de la sidebar
 if (!function_exists('getDB')) {
-    require_once __DIR__ . '/../config/database.php';
+    require_once __DIR__ . '/../../backend/config/database.php';
 }
 $pdo   = getDB();
 $stats = ['freelances' => 0, 'categories' => 0, 'services' => 0, 'commandes' => 0];
@@ -56,7 +54,7 @@ $B = BASE_URL; // Raccourci local
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Admin CSS (chemin absolu calculé dynamiquement) -->
-    <link rel="stylesheet" href="<?= $B ?>/assets/css/admin.css">
+    <link rel="stylesheet" href="<?= $B ?>/frontend/assets/css/admin.css">
 
     <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
@@ -71,7 +69,7 @@ $B = BASE_URL; // Raccourci local
     <aside class="sidebar" id="sidebar">
 
         <!-- Logo -->
-        <a href="<?= $B ?>/admin/index.php" class="sidebar-logo">
+        <a href="<?= $B ?>/frontend/admin/index.php" class="sidebar-logo">
             <div class="logo-icon">⚡</div>
             <div class="logo-text">Freelance<span>Admin</span></div>
         </a>
@@ -81,7 +79,7 @@ $B = BASE_URL; // Raccourci local
 
             <span class="nav-label">Principal</span>
 
-            <a href="<?= $B ?>/admin/index.php"
+            <a href="<?= $B ?>/frontend/admin/index.php"
                class="nav-link <?= $activePage === 'dashboard' ? 'active' : '' ?>"
                id="nav-dashboard">
                 <span class="nav-icon">📊</span>
@@ -90,7 +88,7 @@ $B = BASE_URL; // Raccourci local
 
             <span class="nav-label">Gestion</span>
 
-            <a href="<?= $B ?>/admin/freelances/index.php"
+            <a href="<?= $B ?>/frontend/admin/freelances/index.php"
                class="nav-link <?= $activePage === 'freelances' ? 'active' : '' ?>"
                id="nav-freelances">
                 <span class="nav-icon">👤</span>
@@ -100,7 +98,7 @@ $B = BASE_URL; // Raccourci local
                 <?php endif; ?>
             </a>
 
-            <a href="<?= $B ?>/admin/categories/index.php"
+            <a href="<?= $B ?>/frontend/admin/categories/index.php"
                class="nav-link <?= $activePage === 'categories' ? 'active' : '' ?>"
                id="nav-categories">
                 <span class="nav-icon">🗂️</span>
@@ -110,7 +108,7 @@ $B = BASE_URL; // Raccourci local
                 <?php endif; ?>
             </a>
 
-            <a href="<?= $B ?>/admin/services/index.php"
+            <a href="<?= $B ?>/frontend/admin/services/index.php"
                class="nav-link <?= $activePage === 'services' ? 'active' : '' ?>"
                id="nav-services">
                 <span class="nav-icon">🛠️</span>
@@ -120,7 +118,7 @@ $B = BASE_URL; // Raccourci local
                 <?php endif; ?>
             </a>
 
-            <a href="<?= $B ?>/admin/commandes/index.php"
+            <a href="<?= $B ?>/frontend/admin/commandes/index.php"
                class="nav-link <?= $activePage === 'commandes' ? 'active' : '' ?>"
                id="nav-commandes">
                 <span class="nav-icon">📦</span>
@@ -156,7 +154,7 @@ $B = BASE_URL; // Raccourci local
                     <div class="page-title"><?= htmlspecialchars($pageTitle) ?></div>
                     <?php if (!empty($breadcrumb)): ?>
                     <nav class="breadcrumb" aria-label="Fil d'Ariane">
-                        <a href="<?= $B ?>/admin/index.php">🏠 Accueil</a>
+                        <a href="<?= $B ?>/frontend/admin/index.php">🏠 Accueil</a>
                         <?php foreach ($breadcrumb as $crumb): ?>
                             <span>›</span>
                             <?php if (!empty($crumb['url'])): ?>
@@ -171,7 +169,9 @@ $B = BASE_URL; // Raccourci local
             </div>
             <div class="topbar-right">
                 <div class="topbar-btn" title="Rafraîchir" onclick="location.reload()">🔄</div>
-                <div class="topbar-btn" title="Accueil" onclick="location.href='<?= $B ?>/admin/index.php'">🏠</div>
+                <div class="topbar-btn" title="Accueil" onclick="location.href='<?= $B ?>/frontend/admin/index.php'">🏠</div>
+            </div>
+        </header>p'">🏠</div>
             </div>
         </header>
 

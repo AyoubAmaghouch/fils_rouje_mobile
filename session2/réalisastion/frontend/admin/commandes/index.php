@@ -9,7 +9,7 @@ $pageTitle  = 'Gestion des Commandes';
 $activePage = 'commandes';
 $breadcrumb = [['label' => 'Commandes']];
 
-require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../../../backend/config/database.php';
 require_once __DIR__ . '/../../includes/header.php';
 
 $pdo = getDB();
@@ -105,7 +105,7 @@ function getStatutBadge(string $statut): string {
 
         <button type="submit" class="btn btn-primary">Filtrer</button>
         <?php if ($search || $statutFilter): ?>
-        <a href="<?= BASE_URL ?>/admin/commandes/index.php" class="btn btn-outline">✕ Effacer</a>
+        <a href="<?= BASE_URL ?>/frontend/admin/commandes/index.php" class="btn btn-outline">✕ Effacer</a>
         <?php endif; ?>
     </form>
 </div>
@@ -179,7 +179,7 @@ function getStatutBadge(string $statut): string {
                     <!-- Actions -->
                     <td>
                         <div class="actions-cell">
-                            <a href="<?= BASE_URL ?>/admin/commandes/modifier.php?id=<?= $cmd['id_commande'] ?>"
+                            <a href="<?= BASE_URL ?>/frontend/admin/commandes/modifier.php?id=<?= $cmd['id_commande'] ?>"
                                class="btn btn-warning btn-sm"
                                title="Changer le statut">
                                 ✏️ Modifier Statut
@@ -187,7 +187,7 @@ function getStatutBadge(string $statut): string {
                             <button class="btn btn-danger btn-sm"
                                     title="Supprimer"
                                     onclick="confirmerSuppression(
-                                        '<?= BASE_URL ?>/admin/commandes/supprimer.php?id=<?= $cmd['id_commande'] ?>',
+                                        '<?= BASE_URL ?>/frontend/admin/commandes/supprimer.php?id=<?= $cmd['id_commande'] ?>',
                                         'Commande #<?= $cmd['id_commande'] ?>',
                                         'la commande'
                                     )">

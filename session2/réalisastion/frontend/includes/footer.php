@@ -18,7 +18,7 @@
 </div><!-- fin admin-layout -->
 
 <!-- Admin JavaScript -->
-<script src="<?= BASE_URL ?>/assets/js/admin.js"></script>
+<script src="<?= BASE_URL ?>/frontend/assets/js/admin.js"></script>
 
 </body>
 </html>

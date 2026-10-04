@@ -5,7 +5,7 @@
 
 define('ADMIN_ACCESS', true);
 
-require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../../../backend/config/database.php';
 
 $pdo = getDB();
 
@@ -14,7 +14,7 @@ $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 if (!$id) {
     $_SESSION['flash_msg']  = 'Identifiant invalide.';
     $_SESSION['flash_type'] = 'danger';
-    header('Location: ' . BASE_URL . '/admin/services/index.php');
+    header('Location: ' . BASE_URL . '/frontend/admin/services/index.php');
     exit;
 }
 
@@ -25,7 +25,7 @@ $service = $stmt->fetch();
 if (!$service) {
     $_SESSION['flash_msg']  = 'Service introuvable.';
     $_SESSION['flash_type'] = 'danger';
-    header('Location: ' . BASE_URL . '/admin/services/index.php');
+    header('Location: ' . BASE_URL . '/frontend/admin/services/index.php');
     exit;
 }
 
@@ -47,5 +47,5 @@ try {
     $_SESSION['flash_type'] = 'danger';
 }
 
-header('Location: ' . BASE_URL . '/admin/services/index.php');
+header('Location: ' . BASE_URL . '/frontend/admin/services/index.php');
 exit;
