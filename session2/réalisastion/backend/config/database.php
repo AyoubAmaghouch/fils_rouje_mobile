@@ -9,16 +9,19 @@ require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/../services/ClassificationService.php';
 
 define('DB_HOST', 'localhost');
+define('DB_PORT', '3000');
 define('DB_NAME', 'freelance');
-define('DB_USER', 'root');       // Modifier si nécessaire
-define('DB_PASS', 'Kingfb12');           // Modifier si nécessaire
+define('DB_USER', 'root');       // Configuration normale / par défaut
+define('DB_PASS', '');           // Mot de passe vide (normal)
 define('DB_CHARSET', 'utf8mb4');
 
 function getDB(): PDO {
     static $pdo = null;
 
     if ($pdo === null) {
-        $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
+        $portStr = (!empty(DB_PORT)) ? ";port=" . DB_PORT : "";
+        $dsn = "mysql:host=" . DB_HOST . $portStr . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
+
         $options = [
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
