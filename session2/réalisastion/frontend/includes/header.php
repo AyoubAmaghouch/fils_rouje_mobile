@@ -171,9 +171,8 @@ $B = BASE_URL; // Raccourci local
                 <div class="topbar-btn" title="Rafraîchir" onclick="location.reload()">🔄</div>
                 <div class="topbar-btn" title="Accueil" onclick="location.href='<?= $B ?>/frontend/admin/index.php'">🏠</div>
             </div>
-        </header>p'">🏠</div>
-            </div>
         </header>
+
 
         <!-- Contenu de la page -->
         <main class="page-wrapper">

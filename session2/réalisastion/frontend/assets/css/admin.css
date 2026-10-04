@@ -469,6 +469,20 @@ button {
     min-width: 0;
 }
 
+/* Footer Admin */
+.admin-footer {
+    padding: 16px var(--space-lg);
+    background: var(--bg-topbar);
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: auto;
+}
+
+
 /* =====================================================
    8. CARDS
    ===================================================== */
